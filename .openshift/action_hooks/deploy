@@ -1,0 +1,4 @@
+#!/bin/bash
+# .openshift/action_hooks/deploy
+
+( cd $OPENSHIFT_REPO_DIR ; composer install --no-interaction --no-dev )

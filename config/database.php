@@ -54,8 +54,8 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '3306'),
+            'host' => env('DB_HOST', getenv('OPENSHIFT_MYSQL_DB_HOST')),
+            'port' => env('DB_PORT', getenv('OPENSHIFT_MYSQL_DB_PORT')),
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),

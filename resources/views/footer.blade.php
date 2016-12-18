@@ -1,0 +1,1 @@
+<!--<p class="text-center">&copy; 2015 Ryan M. Coble - All Rights Reserved</p>-->

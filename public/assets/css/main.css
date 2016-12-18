@@ -1,0 +1,73 @@
+
+.container {
+	padding-top: 42px;
+}
+
+.error-msg {
+	text-align: center;
+}
+
+.theme-file-container .table {
+	margin-bottom: 0;
+}
+
+.files tr:first-child td {
+	border: 0;
+}
+
+body.builder .container {
+	padding-top: 12px;
+}
+
+.last-update {
+	font-size: 12px;
+}
+
+ul.sections {
+	padding-left: 0;
+}
+
+ul.sections, .section ul {
+	list-style: none;
+}
+
+.delete-section-modal {
+	margin-bottom: 12px;
+}
+
+.section {
+	margin-top: 12px;
+	margin-bottom: 12px;
+}
+
+.delete-section-modal {
+	margin-bottom: 0;
+}
+
+ul.settings {
+	padding-left: 0;
+	padding-top: 6px;
+}
+
+.setting {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+.form-group[class*="setting-"] ul {
+	list-style: none;
+	padding-left: 8px;
+}
+.form-group[class*="setting-"] li {
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.form-group.setting-radio-options, .form-group.setting-select-options {
+	padding-top: 12px;
+}
+
+.form-group[class*="setting-"], div[class*="setting-"] {
+	display: none;
+}
+.form-group[class*="setting-"].active, div[class*="setting-"].active {
+	display: block;
+}

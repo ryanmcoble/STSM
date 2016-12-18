@@ -1,5 +1,15 @@
 #!/bin/bash
 # .openshift/action_hooks/deploy
 
-( cd $OPENSHIFT_REPO_DIR ; composer install --no-interaction --no-dev )
-( mv ../../.env.example ../../.env )
+# change into the application directory
+cd $OPENSHIFT_REPO_DIR;
+
+# composer commands
+composer install --no-interaction --no-dev;
+composer update;
+
+# move example to .env
+mv .env.example .env;
+
+# generate an application key
+php artisan key:generate;

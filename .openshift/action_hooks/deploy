@@ -8,8 +8,11 @@ cd $OPENSHIFT_REPO_DIR;
 composer install --no-interaction --no-dev;
 composer update;
 
+# migrate all the database changes
+php artisan migrate;
+
 # move example to .env
-mv .env.example .env;
+mv .env.production .env;
 
 # generate an application key
 php artisan key:generate;

@@ -13,7 +13,7 @@ cd $OPENSHIFT_REPO_DIR;
 
 # composer commands
 composer install --no-interaction --no-dev;
-#composer update;
+composer update;
 
 # migrate all the database changes
 php artisan migrate --force;

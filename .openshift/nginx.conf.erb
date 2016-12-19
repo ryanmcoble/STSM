@@ -27,9 +27,9 @@ gzip_disable        "MSIE [1-6]\.";
 gzip_vary           on;
 
 server {
-    listen <%= ENV['OPENSHIFT_NGINX_PORT'] %>;
+    listen <%= ENV['OPENSHIFT_NGINX_IP'] %>:<%= ENV['OPENSHIFT_NGINX_PORT'] %>;
     listen [::]:<%= ENV['OPENSHIFT_NGINX_PORT'] %>;
-    server_name stsb.coble.ninja;
+    #server_name stsb.coble.ninja;
 
     location / {
         return https://$host$request_uri;

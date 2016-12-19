@@ -41,20 +41,19 @@ server {
     }
 }
 
-
 server {
     listen  <%= ENV['OPENSHIFT_NGINX_IP'] %>:<%= ENV['OPENSHIFT_NGINX_PORT'] %>;
     root    <%= ENV['OPENSHIFT_REPO_DIR'] %>/public;
 
-    ssl on;
-    ssl_certificate /opt/letsencrypt/live/stsb.coble.ninja/fullchain.pem;
-    ssl_certificate_key /opt/letsencrypt/live/stsb.coble.ninja/privkey.pem;
-    ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
-    ssl_ciphers EECDH+AESGCM:EDH+AESGCM:EECDH:EDH:!MD5:!RC4:!LOW:!MEDIUM:!CAMELLIA:!ECDSA:!DES:!DSS:!3DES:!NULL;
-    ssl_prefer_server_ciphers on;
-    ssl_ecdh_curve secp384r1; 
-    ssl_session_cache shared:SSL:10m;
-    ssl_session_timeout 10m;
+    #ssl on;
+    #ssl_certificate /opt/letsencrypt/live/stsb.coble.ninja/fullchain.pem;
+    #ssl_certificate_key /opt/letsencrypt/live/stsb.coble.ninja/privkey.pem;
+    #ssl_protocols TLSv1.2 TLSv1.1 TLSv1;
+    #ssl_ciphers EECDH+AESGCM:EDH+AESGCM:EECDH:EDH:!MD5:!RC4:!LOW:!MEDIUM:!CAMELLIA:!ECDSA:!DES:!DSS:!3DES:!NULL;
+    #ssl_prefer_server_ciphers on;
+    #ssl_ecdh_curve secp384r1; 
+    #ssl_session_cache shared:SSL:10m;
+    #ssl_session_timeout 10m;
 
 
     index index.html index.htm index.php;

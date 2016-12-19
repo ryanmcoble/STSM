@@ -26,20 +26,19 @@ gzip_proxied        expired no-cache no-store private auth;
 gzip_disable        "MSIE [1-6]\.";
 gzip_vary           on;
 
+#server {
+#    listen 80;
+#    listen [::]:80;
+#    server_name stsb.coble.ninja;
 
-server {
-    listen 80;
-    listen [::]:80;
-    server_name stsb.coble.ninja;
-
-    location / {
-        return https://$host$request_uri;
-    }
-    location /.well-known {
-      # or some other directory
-      root <%= ENV['OPENSHIFT_REPO_DIR'] %>/public;
-    }
-}
+#    location / {
+#        return https://$host$request_uri;
+#    }
+#    location /.well-known {
+#      # or some other directory
+#      root <%= ENV['OPENSHIFT_REPO_DIR'] %>/public;
+#    }
+#}
 
 server {
     listen  <%= ENV['OPENSHIFT_NGINX_IP'] %>:<%= ENV['OPENSHIFT_NGINX_PORT'] %>;

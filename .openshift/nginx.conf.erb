@@ -33,8 +33,6 @@ server {
     index index.html index.htm index.php;
     charset utf-8;
 
-    ssl on;
-
     location / {
         try_files \$uri \$uri/ /index.php?\$query_string;
     }

@@ -2,10 +2,10 @@
 # .openshift/action_hooks/deploy
 
 # setup lets encrypt
-# sudo git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt;
+# git clone https://github.com/letsencrypt/letsencrypt $OPENSHIFT_TMP_DIR/letsencrypt;
 # sudo service nginx stop;
-# cd /opt/letsencrypt
-# ./letsencrypt-auto certonly --non-interactive --agree-tos --email ryan.m.coble@gmail.com --domain stsb.coble.ninja --renew-by-default --webroot -w $OPENSHIFT_REPO_DIR/public
+# cd $OPENSHIFT_TMP_DIR/letsencrypt;
+# ./letsencrypt-auto certonly --non-interactive --agree-tos --email ryan.m.coble@gmail.com --domain stsb.coble.ninja --renew-by-default --webroot -w $OPENSHIFT_REPO_DIR/public;
 # sudo service nginx start;
 
 # change into the application directory
@@ -13,7 +13,7 @@ cd $OPENSHIFT_REPO_DIR;
 
 # composer commands
 composer install --no-interaction --no-dev;
-composer update;
+#composer update;
 
 # migrate all the database changes
 php artisan migrate --force;

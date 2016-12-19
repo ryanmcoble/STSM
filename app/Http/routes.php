@@ -11,6 +11,15 @@
 |
 */
 
+// SSL check
+use Illuminate\Http\Request;
+Route::get('.well-known/acme-challenge/{hash?}', function(Request $req) {
+	if($req->getBaseUrl() == 'stsb.coble.ninja') {
+		return 'fqTGI3nUiYnelm...';
+	}
+	return 'HASH pre stsb.coble.ninja';
+});
+
 
 // home page / dev install
 Route::get('/', 'HomeController@index');

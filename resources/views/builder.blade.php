@@ -25,7 +25,7 @@ $body_class = 'builder';
                     <option value="{{ $theme->id }}" {{ $theme->id == $file->shopify_theme_id ? 'selected=""' : '' }}>{{ $theme->name }} @if($theme->role == 'main')(Currently Live)@endif</option>
                 @endforeach
             </select>
-            <p class="help-block">Select the Shopify theme you wish to use.</p>
+            <p class="help-block">Select the Shopify theme you wish to synchronize with.</p>
         </div>
        
         <div class="form-group">

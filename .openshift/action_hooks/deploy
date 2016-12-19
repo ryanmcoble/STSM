@@ -2,9 +2,9 @@
 # .openshift/action_hooks/deploy
 
 # setup lets encrypt
-# git clone https://github.com/letsencrypt/letsencrypt $OPENSHIFT_TMP_DIR/letsencrypt;
+# git clone https://github.com/letsencrypt/letsencrypt $OPENSHIFT_DATA_DIR/letsencrypt;
 # sudo service nginx stop;
-# cd $OPENSHIFT_TMP_DIR/letsencrypt;
+# cd $OPENSHIFT_DATA_DIR/letsencrypt;
 # ./letsencrypt-auto certonly --non-interactive --agree-tos --email ryan.m.coble@gmail.com --domain stsb.coble.ninja --renew-by-default --webroot -w $OPENSHIFT_REPO_DIR/public;
 # sudo service nginx start;
 

@@ -101,9 +101,9 @@ class ShopifyController extends Controller
         else { // authenticating from store apps screen, after first install
 
             $shop_url = $req->has('shop') ? $req->input('shop') : Session::get('shop');
-            if(!$shop_url) {
-                return 'Session ended: go back to apps and reopen the application';
-            }
+            //if(!$shop_url) {
+               // return 'Session ended: go back to apps and reopen the application';
+            //}
 
             $shop = Shop::where('permanent_domain', $shop_url)->first();
             if($shop) {

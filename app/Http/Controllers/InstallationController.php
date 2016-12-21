@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\App;
 
+use Log;
+
 class InstallationController extends Controller
 {
     public function install(Request $req) {

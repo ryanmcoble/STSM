@@ -13,9 +13,9 @@
 
 // home page / dev install
 Route::get('/', 'HomeController@index');
-
 // post dev install
 Route::post('install', 'InstallationController@install');
+
 // shopify authentication
 Route::get('auth', 'ShopifyController@installOrAuthenticate');
 // uninstall webhook (why not)
@@ -23,16 +23,14 @@ Route::post('uninstall', 'ShopifyController@uninstall');
 
 
 // after install
-Route::group(['middleware' => 'auth.shopify'], function() {
-	
+Route::group(['middleware' => ['auth.shopify']], function() {
 	Route::get('dashboard', 'DashboardController@index');
-
 	Route::get('files/{file_id}/build', 'BuildController@get');
 });
 
+
 // version 1 of the api
 Route::group(['prefix' => 'api/v1'], function() {
-
 	// get all imported files
 	Route::get('files', 'FileController@index');
 

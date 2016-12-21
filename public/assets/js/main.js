@@ -67,10 +67,10 @@ ThemeSettingsBuilder.Dashboard = (function() {
 				                    &nbsp;&nbsp;&nbsp;${file.title}
 				                </td>
 				                <td class="text-right text-nowrap">
-				                    <a href="/files/${file.id}/build" class="btn btn-xs btn-default build-file" data-toggle="tooltip" data-placement="top" title="Edit file">
+				                    <a href="/files/${file.id}/build" class="btn btn-sm btn-default build-file" data-toggle="tooltip" data-placement="top" title="Edit file">
 				                        <i class="fa fa-wrench"></i>
 				                    </a>
-				                    <button class="btn btn-xs btn-danger delete-file-modal" data-toggle="tooltip" data-placement="top" title="Delete file">
+				                    <button class="btn btn-sm btn-danger delete-file-modal" data-toggle="tooltip" data-placement="top" title="Delete file">
 				                        <i class="fa fa-trash"></i>
 				                    </button>
 				                </td>
@@ -149,6 +149,25 @@ ThemeSettingsBuilder.Dashboard = (function() {
 
 
 ThemeSettingsBuilder.Builder = (function() {
+
+	/**
+	 * Set the last updated text
+	 */
+	function setUpdated(timestamp) {
+		var dateOptions = {
+			//weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: '2-digit',
+			hour: '2-digit',
+			minute: '2-digit',
+			second: '2-digit'
+		};
+		var date = new Date(timestamp);
+		var timeString = date.toLocaleTimeString('en-us', dateOptions);
+
+		$('.last-update').html('Last updated: ' + timeString);
+	}
 
 	/**
 	 * Sync a theme settings file to Shopify
@@ -287,7 +306,13 @@ ThemeSettingsBuilder.Builder = (function() {
 	                                        </div>
 	                                    </div>
 	                                </div>
-	                                <ul class="settings">`;
+	                                <table class="table table-striped settings">
+	                                    <thead>
+	                                        <th>Type</th>
+	                                        <th>Title</th>
+	                                        <th>&nbsp;</th>
+	                                    </thead>
+	                                    <tbody>`;
 
 				for(var settingIndex in section.settings) {
 					var setting = section.settings[settingIndex];
@@ -296,34 +321,25 @@ ThemeSettingsBuilder.Builder = (function() {
 					setting.type = settingDetails.type;
 					var i = parseInt(settingIndex) + 1;
 
-	                sectionsHTML += `<li class="setting" data-setting-id="${setting.id}" data-setting-type="${setting.type}" data-setting="${escape(JSON.stringify(setting))}">
 
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                            <span>${setting.type}</span>
-                        </div>
-
-                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 settings-btn-container">
-                            ${setting.title}
-
-                            <span class="pull-right">
-                                <button class="btn btn-xs btn-info edit-setting-modal" data-toggle="tooltip" title="Edit setting"><i class="fa fa-pencil"></i></button>
-                                <button class="btn btn-xs btn-danger delete-setting-modal" data-toggle="tooltip" title="Delete setting"><i class="fa fa-trash"></i></button>
-                            </span>
-                        </div>
-	                </li>
-	                <div class="clearfix"></div>`;
+					sectionsHTML += `<tr class="setting" data-setting-id="${setting.id}" data-setting-type="${setting.type}" data-setting="${escape(JSON.stringify(setting))}">
+                                            <td>${setting.type}</td>
+                                            <td>${setting.title}</td>
+                                            <td><button class="btn btn-xs btn-info edit-setting-modal" data-toggle="tooltip" title="Edit setting"><i class="fa fa-pencil"></i></button>&nbsp;<button class="btn btn-xs btn-danger delete-setting-modal" data-toggle="tooltip" title="Delete setting"><i class="fa fa-trash"></i></button></td>
+                                        </tr>`;
 				}
 
 				if(!section.settings.length) {
-					sectionsHTML += `<li>
-				                        <span>No settings</span>
+					sectionsHTML += `<tr>
+				                        <td colspan="3">No settings</td>
 				                    </li>`;
 			    }
 
 			    if(parseInt(sectionIndex) < data.sections.length - 1) {
 			    	sectionsHTML += `	<hr>`;			    }
 
-			    sectionsHTML += `	</ul>`;
+			    sectionsHTML += `	</tbody>
+                                </table>`;
 			}
 
 			if(!data.sections.length) {
@@ -465,7 +481,6 @@ ThemeSettingsBuilder.Builder = (function() {
 	 * Load the setting modal
 	 */
 	function loadSettingModal(modalSelector, setting) {
-		//console.log(setting);
 		var container = $(modalSelector);
 
 		// remove active class from all fields
@@ -493,12 +508,15 @@ ThemeSettingsBuilder.Builder = (function() {
 					optionsHTML += '<tr class="option">' + "\n\r";
 					optionsHTML += '<td class="option-label">' + option.label + '</td>' + "\n\r";
 					optionsHTML += '<td class="option-value">' + option.value + '</td>' + "\n\r";
-					optionsHTML += '<td><a class="btn btn-xs btn-danger delete-option"><i class="fa fa-trash"></i></a></td>' + "\n\r";
+					optionsHTML += '<td><a class="btn btn-xs btn-danger delete-option" data-toggle="tooltip" title="Delete option"><i class="fa fa-trash"></i></a></td>' + "\n\r";
 					optionsHTML += '</tr>' + "\n\r";
 				}
 
 				if(setting.options) {
 					container.find('.form-group.setting-' + fieldKeys[i] + ' tbody').html(optionsHTML);
+				}
+				else {
+					container.find('.form-group.setting-' + fieldKeys[i] + ' tbody').html('<tr><td colspan="3">No options</td></tr>');
 				}
 			}
 			else if(setting.type === 'select' && fieldKeys[i] === 'select-options') {
@@ -510,12 +528,15 @@ ThemeSettingsBuilder.Builder = (function() {
 					optionsHTML += '<td class="option-group" data-option-group="' + option.group + '">' + option.group + '</td>' + "\n\r";
 					optionsHTML += '<td class="option-label">' + option.label + '</td>' + "\n\r";
 					optionsHTML += '<td class="option-value">' + option.value + '</td>' + "\n\r";
-					optionsHTML += '<td><a class="btn btn-xs btn-danger delete-option"><i class="fa fa-trash"></i></a></td>' + "\n\r";
+					optionsHTML += '<td><a class="btn btn-xs btn-danger delete-option" data-toggle="tooltip" title="Delete option"><i class="fa fa-trash"></i></a></td>' + "\n\r";
 					optionsHTML += '</tr>' + "\n\r";
 				}
 
 				if(setting.options) {
 					container.find('.form-group.setting-' + fieldKeys[i] + ' tbody').html(optionsHTML);
+				}
+				else {
+					container.find('.form-group.setting-' + fieldKeys[i] + ' tbody').html('<tr><td colspan="3">No options</td></tr>');
 				}
 			}
 
@@ -552,6 +573,7 @@ ThemeSettingsBuilder.Builder = (function() {
 	}
 
 	return {
+		setUpdated: setUpdated,
 		sync: sync,
 		changeTheme: changeTheme,
 		changeName: changeName,
@@ -653,6 +675,9 @@ $(function() {
 		$(document).on('change', '.selected-theme', function(e) {
 			var theme_id = $(this).val();
 			builder.Builder.changeTheme(theme_id, function(data) {
+				
+				builder.Builder.setUpdated(data.updated_file.updated_at);
+
 				// update last update timestamp
 				if(typeof ShopifyApp !== 'undefined') ShopifyApp.flashNotice('Theme selected successfully');
 			});
@@ -667,6 +692,9 @@ $(function() {
 			fileNameTypingTimer = setTimeout(function() {
 				// update file name
 				builder.Builder.changeName(title, function(data) {
+
+					builder.Builder.setUpdated(data.updated_file.updated_at);
+
 					// update last update timestamp
 					if(typeof ShopifyApp !== 'undefined') ShopifyApp.flashNotice('File saved successfully');
 				});
@@ -693,6 +721,9 @@ $(function() {
 			var title = container.find('input[name="name"]').val();
 
 			builder.Builder.addSection(title, function(data){
+
+				builder.Builder.setUpdated(data.file.updated_at);
+
 				builder.Builder.loadSections();
 
 				container.find('input[name="name"]').val('');
@@ -712,6 +743,9 @@ $(function() {
 			sectionNameTypingTimer = setTimeout(function() {
 				// update section name
 				builder.Builder.changeSectionName(section_id, title, function(data) {
+
+					builder.Builder.setUpdated(data.file.updated_at);
+
 					// update last update timestamp
 					if(typeof ShopifyApp !== 'undefined') ShopifyApp.flashNotice('File section saved successfully');
 				});
@@ -736,6 +770,9 @@ $(function() {
 		$(document).on('click', '.delete-section', function(e) {
 			var section_id = $('#delete_section_modal').attr('data-section-id');
 			builder.Builder.deleteSection(section_id, function(data){
+
+				builder.Builder.setUpdated(data.file.updated_at);
+
 				builder.Builder.loadSections();
 
 				$('#delete_section_modal').modal('hide');
@@ -758,9 +795,15 @@ $(function() {
 			optionsHTML += '<td class="option-group" data-option-group="' + group + '">' + group + '</td>' + "\n\r";
 			optionsHTML += '<td class="option-label">' + label + '</td>' + "\n\r";
 			optionsHTML += '<td class="option-value">' + value + '</td>' + "\n\r";
-			optionsHTML += '<td><a class="btn btn-xs btn-danger delete-option"><i class="fa fa-trash"></i></a></td>' + "\n\r";
+			optionsHTML += '<td><a class="btn btn-xs btn-danger delete-option" data-toggle="tooltip" title="Delete option"><i class="fa fa-trash"></i></a></td>' + "\n\r";
 			optionsHTML += '</tr>' + "\n\r";
-			container.find('.setting-select-options tbody').append(optionsHTML);
+
+			if(container.find('.setting-select-options .option').length) {
+				container.find('.setting-select-options tbody').append(optionsHTML);
+			}
+			else {
+				container.find('.setting-select-options tbody').html(optionsHTML);
+			}
 
 			container.find('.setting-select-options-form .group-input').val('');
 			container.find('.setting-select-options-form .label-input').val('');
@@ -780,9 +823,15 @@ $(function() {
 			var optionsHTML = '<tr class="option">' + "\n\r";
 			optionsHTML += '<td class="option-label">' + label + '</td>' + "\n\r";
 			optionsHTML += '<td class="option-value">' + value + '</td>' + "\n\r";
-			optionsHTML += '<td><a class="btn btn-xs btn-danger delete-option"><i class="fa fa-trash"></i></a></td>' + "\n\r";
+			optionsHTML += '<td><a class="btn btn-xs btn-danger delete-option" data-toggle="tooltip" title="Delete option"><i class="fa fa-trash"></i></a></td>' + "\n\r";
 			optionsHTML += '</tr>' + "\n\r";
-			container.find('.setting-radio-options tbody').append(optionsHTML);
+
+			if(container.find('.setting-radio-options .option').length) {
+				container.find('.setting-radio-options tbody').append(optionsHTML);
+			}
+			else {
+				container.find('.setting-radio-options tbody').html(optionsHTML);
+			}
 
 			container.find('.setting-radio-options-form .label-input').val('');
 			container.find('.setting-radio-options-form .value-input').val('');
@@ -791,9 +840,15 @@ $(function() {
 		// remove option
 		$(document).on('click', '.delete-option', function(e) {
 			e.preventDefault();
+			var container = $('#change_setting_modal');
 
 			var option = $(this).closest('tr');
 			option.remove();
+
+			if(!container.find('.option').length) {
+				container.find('.setting-radio-options tbody').html('<tr><td colspan="3">No settings</td></tr>');
+				container.find('.setting-select-options tbody').html('<tr><td colspan="4">No settings</td></tr>');
+			}
 		});
 
 
@@ -882,6 +937,9 @@ $(function() {
 			}
 
 			builder.Builder.addSetting(section_id, params, function(data){
+
+				builder.Builder.setUpdated(data.file.updated_at);
+
 				builder.Builder.loadSections();
 
 				container.modal('hide');
@@ -903,8 +961,6 @@ $(function() {
 			container.find('.btn-primary').addClass('edit-setting');
 
 			var setting = JSON.parse(unescape($(this).closest('.setting').attr('data-setting')));
-
-			//console.log(setting);
 
 			container.attr('data-setting-id', setting.id);
 
@@ -989,17 +1045,13 @@ $(function() {
 						label: $(selectOptions[j]).find('.option-label').text(),
 						value: $(selectOptions[j]).find('.option-value').text()
 					});
-
-					console.log({
-						group: $(selectOptions[j]).find('.option-group').attr('data-option-group'),
-						label: $(selectOptions[j]).find('.option-label').text(),
-						value: $(selectOptions[j]).find('.option-value').text()
-					});
-
 				}
 			}
 
 			builder.Builder.editSetting(setting_id, params, function(data){
+
+				builder.Builder.setUpdated(data.file.updated_at);
+
 				builder.Builder.loadSections();
 
 				container.modal('hide');
@@ -1026,6 +1078,9 @@ $(function() {
 		$(document).on('click', '.delete-setting', function(e) {
 			var setting_id = $('#delete_setting_modal').attr('data-setting-id');
 			builder.Builder.deleteSetting(setting_id, function(data){
+
+				builder.Builder.setUpdated(data.file.updated_at);
+
 				builder.Builder.loadSections();
 
 				$('#delete_setting_modal').modal('hide');

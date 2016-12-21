@@ -192,7 +192,7 @@
                             <input class="form-control value-input">
                         </div>
                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                            <button class="btn btn-sm btn-secondary add-option" style="margin-top: 25px;">Add Option</button>
+                            <button class="btn btn-sm btn-secondary add-option" data-toggle="tooltip" title="Add option" style="margin-top: 25px;"><i class="fa fa-plus"></i> Add Option</button>
                         </div>
                     </div>
                     <div class="form-group setting-radio-options">
@@ -229,7 +229,7 @@
                             <input class="form-control value-input">
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                            <button class="btn btn-sm btn-secondary add-option-with-group" style="margin-top: 25px;">Add Option</button>
+                            <button class="btn btn-sm btn-secondary add-option-with-group" data-toggle="tooltip" title="Add option" style="margin-top: 25px;"><i class="fa fa-plus"></i> Add Option</button>
                         </div>
                     </div>
                     <div class="form-group setting-select-options">

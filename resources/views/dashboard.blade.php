@@ -22,14 +22,14 @@ $body_class = 'dashboard';
                             @foreach($files as $file)
                             <tr data-file-id="{{ $file->id }}">
                                 <td>
-                                    <span class="fa fa-file"></span>
+                                    <span class="fa fa-file-code-o"></span>
                                     &nbsp;&nbsp;&nbsp;{{ $file->title }}
                                 </td>
                                 <td class="text-right text-nowrap">
-                                    <a href="/files/{{ $file->id }}/build" class="btn btn-xs btn-default build-file" data-toggle="tooltip" data-placement="top" title="Edit file">
+                                    <a href="/files/{{ $file->id }}/build" class="btn btn-sm btn-default build-file" data-toggle="tooltip" data-placement="top" title="Edit file">
                                         <i class="fa fa-wrench"></i>
                                     </a>
-                                    <button class="btn btn-xs btn-danger delete-file-modal" data-toggle="tooltip" data-placement="top" title="Delete file">
+                                    <button class="btn btn-sm btn-danger delete-file-modal" data-toggle="tooltip" data-placement="top" title="Delete file">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </td>
@@ -57,7 +57,7 @@ $body_class = 'dashboard';
         ShopifyApp.Bar.initialize({
             forceRedirect: false,
             debug: true,
-            icon: '',//'/nothing.jpg',
+            icon: 'assets/img/stsb-icon.png',//'/nothing.jpg',
             title: '',//'Dashboard',
             buttons: {
                 primary: [

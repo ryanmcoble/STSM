@@ -121,6 +121,8 @@ class FileController extends Controller
             $data[] = $s;
         }
 
+        $file->touch();
+
         $result = $this->shopifyData->setThemeSettingsFile($file->shopify_theme_id, $data);
 
         return ['status' => 'success', 'message' => 'File synced to Shopify successfully!'];
@@ -251,7 +253,9 @@ class FileController extends Controller
         $section->title = $title;
         $section->save();
 
-        return ['status' => 'success', 'created_section' => $section];
+        $file->touch();
+
+        return ['status' => 'success', 'file' => $file, 'created_section' => $section];
     }
 
     // edit a file section
@@ -277,7 +281,9 @@ class FileController extends Controller
         $section->title = $title;
         $section->save();
 
-        return ['status' => 'success', 'updated_section' => $section];
+        $section->file->touch();
+
+        return ['status' => 'success', 'file' => $section->file, 'updated_section' => $section];
     }
 
     // delete a file section
@@ -298,9 +304,11 @@ class FileController extends Controller
             return ['status' => 'error', 'message' => 'You do not have permission to delete this section.'];
         }
 
+        $section->file->touch();
+
         $section->delete();
 
-        return ['status' => 'success', 'deleted_section' => $section];
+        return ['status' => 'success', 'file' => $section->file, 'deleted_section' => $section];
     }
 
     // add a setting
@@ -360,7 +368,9 @@ class FileController extends Controller
         $setting->json_value = json_encode(array_except($params, ['section_id']));
         $setting->save();
 
-        return ['status' => 'success', 'created_setting' => $setting];
+        $setting->section->file->touch();
+
+        return ['status' => 'success', 'file' => $setting->section->file, 'created_setting' => $setting];
     }
 
     // edit a setting
@@ -412,7 +422,9 @@ class FileController extends Controller
         $setting->json_value = json_encode($params);
         $setting->save();
 
-        return ['status' => 'success', 'updated_setting' => $setting];
+        $setting->section->file->touch();
+
+        return ['status' => 'success', 'file' => $setting->section->file, 'updated_setting' => $setting];
     }
 
     // delete a file setting
@@ -433,8 +445,10 @@ class FileController extends Controller
             return ['status' => 'error', 'message' => 'You do not have permission to delete this setting.'];
         }
 
+        $setting->section->file->touch();
+
         $setting->delete();
 
-        return ['status' => 'success', 'deleted_setting' => $setting];
+        return ['status' => 'success', 'file' => $setting->section->file, 'deleted_setting' => $setting];
     }
 }

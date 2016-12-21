@@ -10,7 +10,7 @@ $body_class = 'builder';
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <p class="help-block pull-right last-update">Last updated: {{ date('l F jS Y h:i:s A', strtotime($file->updated_at)) }}</p>
+        <p class="help-block pull-right last-update">Last updated: {{ date('F j, Y, h:i:s A', strtotime($file->updated_at)) }}</p>
     </div>
 </div>
 
@@ -29,7 +29,7 @@ $body_class = 'builder';
         </div>
        
         <div class="form-group">
-            <label>Name:</label>
+            <label>Visual File Name:</label>
             <input class="form-control name" value="{{ $file->title }}">
         </div>
 
@@ -64,9 +64,14 @@ $body_class = 'builder';
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <!--<p>Settings</p>-->
-                                <ul class="settings">
+
+                                <table class="table table-striped settings">
+                                    <thead>
+                                        <th>Type</th>
+                                        <th>Title</th>
+                                        <th>&nbsp;</th>
+                                    </thead>
+                                    <tbody>
                                     @if(count($section->settings))
 
                                         <?php $j = 1; ?>
@@ -79,36 +84,24 @@ $body_class = 'builder';
                                                 $setting->type = $settingValue->type;
                                             }
                                         ?>
-
-                                        <li class="setting" data-setting-id="{{ $setting->id }}" data-setting-type="{{ $setting->type }}" data-setting="{{ json_encode($setting) }}">
-
-                                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                                                <span>{{ $setting->type }}</span>
-                                            </div>
-
-                                            <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 settings-btn-container">
-                                                {{ $setting->title }}
-
-                                                <span class="pull-right">
-                                                    <button class="btn btn-xs btn-info edit-setting-modal" data-toggle="tooltip" title="Edit setting"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-danger delete-setting-modal" data-toggle="tooltip" title="Delete setting"><i class="fa fa-trash"></i></button>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <div class="clearfix"></div>
+                                        
+                                        <tr class="setting" data-setting-id="{{ $setting->id }}" data-setting-type="{{ $setting->type }}" data-setting="{{ json_encode($setting) }}">
+                                            <td>{{ $setting->type }}</td>
+                                            <td>{{ $setting->title }}</td>
+                                            <td><button class="btn btn-xs btn-info edit-setting-modal" data-toggle="tooltip" title="Edit setting"><i class="fa fa-pencil"></i></button>&nbsp;<button class="btn btn-xs btn-danger delete-setting-modal" data-toggle="tooltip" title="Delete setting"><i class="fa fa-trash"></i></button></td>
+                                        </tr>
 
                                         <?php $j++; ?>
                                         @endforeach
 
                                     @else
-                                    <li>
-                                        <span>No settings</span>
-                                    </li>
+                                    <tr><td colspan="3">No settings</td></tr>
                                     @endif
-                                </ul>
+                                    </tbody>
+                                </table>
 
                                 @if($i < count($file->sections) - 1)
-                                    <hr>
+                                    <!--<hr>-->
                                 @endif
                             </li>
                             <?php $i++; ?>
@@ -131,7 +124,7 @@ $body_class = 'builder';
         ShopifyApp.Bar.initialize({
             forceRedirect: false,
             debug: true,
-            icon: '',//'/nothing.jpg',
+            icon: 'assets/img/stsb-icon.png',//'/nothing.jpg',
             title: 'Builder',
             buttons: {
                 primary: [

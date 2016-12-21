@@ -44,11 +44,10 @@ ul.sections, .section ul {
 	margin-bottom: 0;
 }
 
-ul.settings {
+/*ul.settings {
 	padding-left: 0;
 	padding-top: 6px;
 }
-
 .setting {
 	padding-top: 6px;
 	padding-bottom: 6px;
@@ -60,7 +59,7 @@ ul.settings {
 .form-group[class*="setting-"] li {
 	padding-top: 2px;
 	padding-bottom: 2px;
-}
+}*/
 .form-group.setting-radio-options, .form-group.setting-select-options {
 	padding-top: 12px;
 }

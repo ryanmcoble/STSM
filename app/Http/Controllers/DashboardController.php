@@ -23,6 +23,12 @@ class DashboardController extends Controller
     { 
     	$files = File::where('shop_id', $this->shop->id)->get();
 
+    	// lets redirect them back to the install url
+    	$shopify = App::make('ShopifyAPI', [
+    	    'API_KEY'     => env('API_KEY'),
+    	    'SHOP_DOMAIN' => Session::get('shop'),
+    	]);
+    	
         return view('dashboard')->with(['files' => $files]);
     }
 }

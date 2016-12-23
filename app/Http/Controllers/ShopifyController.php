@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Error;
+
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -51,6 +53,9 @@ class ShopifyController extends Controller
                 }
 
                 $accessToken = $shopify->getAccessToken($code);
+                if(!$accessToken) {
+                    throw new Error('Access Token Error!');
+                }
             }
             catch(Exception $e) {
                 Log::error($e->getMessage());
